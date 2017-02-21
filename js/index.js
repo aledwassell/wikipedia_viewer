@@ -13,42 +13,43 @@ var
 	limit;
 	limit = "limit=5";
 
+var url;
+
 limitInput.addEventListener('change', function() {
 	limit = "limit=" + limitInput.value;
-	console.log(limit);
 });
 
 searchText.addEventListener('change', function() {
+		search = "&search=" + searchText.value;
+		url = 'https://en.wikipedia.org/w/api.php?action=opensearch&origin=%2A' + search + "&" + limit + "&format=json";
+		console.log(url);
 		getVal();
 });
 
 function getVal() {
-
-	search = "&search=" + searchText.value;
-
-	var url = 'https://en.wikipedia.org/w/api.php?action=opensearch&origin=%2A' + search + "&" + limit + "&format=json";
-
-	console.log(url);
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url, true);
 	xhr.send();
 
-	xhr.readystatechange = httpRequest;
+	xhr.addEventListener('readystatechange', gotData, false);
 
-	httpRequest(data, function(data) {
-		data[1].forEach(function(i, index) {
-			var
-				head = i;
-				body = data[2][index];
-				link = data[3][index];
-				text = (
-					'<div class="callout large primary"><h1>' + head + '</h1><br><p>' + body + '</p><br><a href=' + link + ' target="_blank">link</a></div>'
-				);
-			console.log(data);
-			target.prepend(text);
-			searchText.value = '';
-		});
-	});
+	function gotData(i) {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			console.log("it's time to party");
+			var data = JSON.parse(xhr.responseText);
+			data[1].forEach(function(i, index) {
+				console.log(i);
+				var
+					head = i;
+					body = data[2][index];
+					link = data[3][index];
+					text = (
+						'<div class="callout large primary"><h1>' + head + '</h1><br><p>' + body + '</p><br><a href=' + link + ' target="_blank">link</a></div>'
+					);
+				searchText.value = '';
+			});
+		}
+	};
 };
 
 // $('#search').on('focus', function() {
