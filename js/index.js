@@ -37,16 +37,13 @@ function getVal() {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			// console.log("it's time to party");
 			const data = JSON.parse(xhr.responseText);
+
 			let header = data.shift();
 
-			let fruits = ["fruits", ["banana","orange"],["yellow","orange"],["www.Iamabana.com","Iamaorange.co.uk"]];
-
-			let head = fruits.shift();
-
-			let fruitsColor = fruits[0].map(function(fruit, index){
-    		return '<h1>' + fruit + '</h1> <p>' + fruits[1][index] + '</p> <a>' + fruits[2][index] + '</a>';
+			let dataInfo = data[0].map(function(item, index){
+    		return '<h1>' + item + '</h1><br><p>' + data[1][index] + '</p><br><a href="' + data[2][index] + '">wikipedia page</a>';
   		});
-			console.log(fruitsColor);
+			console.log(dataInfo);
 
 		}
 		searchText.value = '';
