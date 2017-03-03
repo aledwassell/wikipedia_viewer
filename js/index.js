@@ -13,7 +13,7 @@ var
 	limit;
 	limit = "limit=5";
 
-var url;
+let url;
 
 limitInput.addEventListener('change', function() {
 	limit = "limit=" + limitInput.value;
@@ -27,28 +27,29 @@ searchText.addEventListener('change', function() {
 });
 
 function getVal() {
-	var xhr = new XMLHttpRequest();
+	let xhr = new XMLHttpRequest();
 	xhr.open('GET', url, true);
 	xhr.send();
 
 	xhr.addEventListener('readystatechange', gotData, false);
 
-	function gotData(i) {
+	function gotData() {
 		if (xhr.readyState === 4 && xhr.status === 200) {
-			console.log("it's time to party");
-			var data = JSON.parse(xhr.responseText);
-			data[1].forEach(function(i, index) {
-				console.log(i);
-				var
-					head = i;
-					body = data[2][index];
-					link = data[3][index];
-					text = (
-						'<div class="callout large primary"><h1>' + head + '</h1><br><p>' + body + '</p><br><a href=' + link + ' target="_blank">link</a></div>'
-					);
-				searchText.value = '';
-			});
+			// console.log("it's time to party");
+			const data = JSON.parse(xhr.responseText);
+			let header = data.shift();
+
+			let fruits = ["fruits", ["banana","orange"],["yellow","orange"],["www.Iamabana.com","Iamaorange.co.uk"]];
+
+			let head = fruits.shift();
+
+			let fruitsColor = fruits[0].map(function(fruit, index){
+    		return '<h1>' + fruit + '</h1> <p>' + fruits[1][index] + '</p> <a>' + fruits[2][index] + '</a>';
+  		});
+			console.log(fruitsColor);
+
 		}
+		searchText.value = '';
 	};
 };
 
