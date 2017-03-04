@@ -1,12 +1,13 @@
-var newRandomArticle = function(){
+const newRandomArticle = function(){
 	window.open('https://en.wikipedia.org/wiki/Special:Random', '_blank');
 };
 document.getElementById('random').addEventListener("click", function() {
 	newRandomArticle();
 });
 
-var
+let
 	target = document.getElementById('target');
+	head = document.getElementById('head');
 	search = "&search=cake";
 	limitInput = document.getElementById('limit');
 	searchText = document.getElementById('search');
@@ -38,12 +39,19 @@ function getVal() {
 			// console.log("it's time to party");
 			const data = JSON.parse(xhr.responseText);
 
-			let header = data.shift();
+			// both the header and the main body of text are cleared out every time got data is called
+			head.innerHTML = "";
+			target.innerHTML = "";
 
-			let dataInfo = data[0].map(function(item, index){
-    		return '<h1>' + item + '</h1><br><p>' + data[1][index] + '</p><br><a href="' + data[2][index] + '">wikipedia page</a>';
+			//header, this is the search term used
+			let header = data.shift();
+			head.innerHTML = '<h1>' + header + '</h1>';
+
+			//map function to map over the data recieved from the JSON parse
+			let dataMapped = data[0].map(function(item, index){
+    		let particle = '<h3>' + item + '</h3><br><p>' + data[1][index] + '</p><br><input type="button" href="' + data[2][index] + '" value="' + item + '">';
+				target.innerHTML += particle;
   		});
-			console.log(dataInfo);
 
 		}
 		searchText.value = '';
