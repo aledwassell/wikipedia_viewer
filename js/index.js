@@ -44,12 +44,13 @@ function getVal() {
 			target.innerHTML = "";
 
 			//header, this is the search term used
-			let header = data.shift();
+			let firstItem = data.shift();
+			let header = firstItem.replace(/\b\w/g, l => l.toUpperCase());
 			head.innerHTML = '<h1>' + header + '</h1>';
 
 			//map function to map over the data recieved from the JSON parse
 			let dataMapped = data[0].map(function(item, index){
-    		let particle = '<h3>' + item + '</h3><br><p>' + data[1][index] + '</p><br><input type="button" href="' + data[2][index] + '" value="' + item + '">';
+    		let particle = '<h3>' + item + '</h3><br><p>' + data[1][index] + '</p><br><a href="' + data[2][index] + '" target="_blank"><input type="submit" value="' + item + '"></a>';
 				target.innerHTML += particle;
   		});
 
