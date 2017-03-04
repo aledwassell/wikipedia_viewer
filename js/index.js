@@ -13,8 +13,7 @@ let
 	searchText = document.getElementById('search');
 	limit;
 	limit = "limit=5";
-
-let url;
+	url = "";
 
 limitInput.addEventListener('change', function() {
 	limit = "limit=" + limitInput.value;
@@ -50,7 +49,7 @@ function getVal() {
 
 			//map function to map over the data recieved from the JSON parse
 			let dataMapped = data[0].map(function(item, index){
-    		let particle = '<h3>' + item + '</h3><br><p>' + data[1][index] + '</p><br><a href="' + data[2][index] + '" target="_blank"><input type="submit" value="' + item + '"></a>';
+    		let particle = '<div id="listitem" ><h3>' + item + '</h3><br><p>' + data[1][index] + '</p><br><a href="' + data[2][index] + '" target="_blank" class="button" >More About ' + item + '</a><hr></div>';
 				target.innerHTML += particle;
   		});
 
