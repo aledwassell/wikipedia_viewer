@@ -45,7 +45,7 @@ function getVal() {
 			//header, this is the search term used
 			let firstItem = data.shift();
 			let header = firstItem.replace(/\b\w/g, l => l.toUpperCase());
-			head.innerHTML = '<h1>' + header + '</h1>';
+			head.innerHTML = '<h1>You searched for ' + header + '</h1>';
 
 			//map function to map over the data recieved from the JSON parse
 			let dataMapped = data[0].map(function(item, index){
